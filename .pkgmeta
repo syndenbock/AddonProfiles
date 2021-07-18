@@ -1,4 +1,8 @@
 package-as: AddonProfiles
 
+ignore:
+  - Media
+  - .gitignore
+
 move-folders:
   AddonProfiles/AddonProfiles: AddonProfiles
