@@ -1,0 +1,8 @@
+## Interface: 90100
+## Notes: Allows easy saving and restoring lists of enabled addons.
+## Title: AddonProfiles
+## Author: syndenbock
+## SavedVariables: AddonProfiles_Saved
+## Version: 1.0
+
+AddonProfiles.lua
