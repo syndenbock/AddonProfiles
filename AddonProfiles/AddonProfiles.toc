@@ -1,8 +1,11 @@
 ## Interface: 90100
-## Notes: Allows easy saving and restoring lists of enabled addons.
+## Interface-Classic: 11307
+## Interface-BCC: 20501
+## Notes: Allows easy saving and restoring of lists of enabled addons.
 ## Title: AddonProfiles
 ## Author: syndenbock
 ## SavedVariables: AddonProfiles_Saved
+## X-Curse-Project-ID: 504844
 ## Version: 1.0
 
 AddonProfiles.lua

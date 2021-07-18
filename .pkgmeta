@@ -1,0 +1,4 @@
+package-as: AddonProfiles
+
+move-folders:
+  AddonProfiles/AddonProfiles: AddonProfiles
