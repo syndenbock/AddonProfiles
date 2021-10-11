@@ -109,8 +109,10 @@ end
 local function restoreProfile (profile)
   local playerName = getPlayerName();
 
-  for addonName, enabled in pairs(profile) do
-    if (enabled) then
+  for x = 1, GetNumAddOns(), 1 do
+    local addonName = GetAddOnInfo(x);
+
+    if (profile[addonName] == true) then
       EnableAddOn(addonName, playerName);
     else
       DisableAddOn(addonName, playerName);
