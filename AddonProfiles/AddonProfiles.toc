@@ -1,6 +1,6 @@
-## Interface: 90100
-## Interface-Classic: 11307
-## Interface-BCC: 20501
+## Interface: 902005
+## Interface-Classic: 11402
+## Interface-BCC: 20504
 ## Notes: Allows easy saving and restoring of lists of enabled addons.
 ## Title: AddonProfiles
 ## Author: syndenbock
