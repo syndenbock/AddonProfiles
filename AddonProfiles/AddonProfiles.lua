@@ -1,15 +1,16 @@
-local ADDON_NAME, ADDON = ...;
+local ADDON_NAME, _ = ...;
 
 local strsplit = strsplit;
 local strjoin = strjoin;
 local tremove = tremove;
 
 local UnitName = UnitName;
-local GetNumAddOns = GetNumAddOns;
-local GetAddOnInfo = GetAddOnInfo;
-local GetAddOnEnableState = GetAddOnEnableState;
-local EnableAddOn = EnableAddOn;
-local DisableAddOn = DisableAddOn;
+local C_AddOns = C_AddOns;
+local GetNumAddOns = C_AddOns.GetNumAddOns;
+local GetAddOnInfo = C_AddOns.GetAddOnInfo;
+local GetAddOnEnableState = C_AddOns.GetAddOnEnableState;
+local EnableAddOn = C_AddOns.EnableAddOn;
+local DisableAddOn = C_AddOns.DisableAddOn;
 
 --##############################################################################
 
@@ -85,7 +86,7 @@ local function getAddonEnabledInfo ()
   local info = {};
 
   for x = 1, GetNumAddOns(), 1 do
-    info[GetAddOnInfo(x)] = (GetAddOnEnableState(playerName, x) == 2);
+    info[GetAddOnInfo(x)] = (GetAddOnEnableState(x, playerName) == 2);
   end
 
   return info;
