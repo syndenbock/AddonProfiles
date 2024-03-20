@@ -1,4 +1,4 @@
-## Interface: 100205
+## Interface: 100206
 ## Interface-Wrath: 30403
 ## Interface-BCC: 20504
 ## Interface-Classic: 11501
@@ -7,6 +7,6 @@
 ## Author: syndenbock
 ## SavedVariables: AddonProfiles_Saved
 ## X-Curse-Project-ID: 504844
-## Version: 1.2.3
+## Version: 1.2.4
 
 AddonProfiles.lua
