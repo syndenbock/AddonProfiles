@@ -1,8 +1,8 @@
 local ADDON_NAME, _ = ...;
 
+local strlower = _G.strlower;
 local strsplit = strsplit;
 local strjoin = strjoin;
-local tremove = tremove;
 
 local UnitName = UnitName;
 local GetNumAddOns = GetNumAddOns;
@@ -48,34 +48,26 @@ end);
 
 local slashCommands = {};
 
-local function slashHandler (input)
-  local command = 'default';
-  local paramList;
-
-  if (input ~= nil) then
-    paramList = {strsplit(' ', input)};
-    command = tremove(paramList, 1);
-
-    if (command == nil or command == '') then
-      command = 'default';
-    end
-
-    if (#paramList == 0) then
-      paramList = nil;
-    end
-  end
-
+local function executeSlashCommand (command, ...)
   if (not slashCommands[command]) then
     return print(ADDON_NAME .. ': unknown command "' .. command .. '"');
   end
 
-  -- usually we want to keep the parameters separated but all slash commands use
-  -- profile names so this prevents code duplication
-  if (paramList == nil) then
+  -- All slash commands use profile names so passing "default" as the profile
+  -- name if none was passed prevents code duplication.
+  if (... == nil) then
     slashCommands[command]('default');
   else
-    slashCommands[command](unpack(paramList));
+    slashCommands[command](...);
   end
+end
+
+local function slashHandler (input)
+  if (input == nil or input == '') then
+    return executeSlashCommand('default');
+  end
+
+  executeSlashCommand (strsplit(' ', input));
 end
 
 _G['SLASH_' .. ADDON_NAME .. '1'] = '/' .. ADDON_NAME;
