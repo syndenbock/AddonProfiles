@@ -1,15 +1,16 @@
 local ADDON_NAME, _ = ...;
 
-local strlower = _G.strlower;
 local strsplit = strsplit;
 local strjoin = strjoin;
 
 local UnitName = UnitName;
-local GetNumAddOns = GetNumAddOns;
-local GetAddOnInfo = GetAddOnInfo;
-local GetAddOnEnableState = GetAddOnEnableState;
-local EnableAddOn = EnableAddOn;
-local DisableAddOn = DisableAddOn;
+
+local C_AddOns = _G.C_AddOns;
+local GetNumAddOns = C_AddOns.GetNumAddOns;
+local GetAddOnInfo = C_AddOns.GetAddOnInfo;
+local GetAddOnEnableState = C_AddOns.GetAddOnEnableState;
+local EnableAddOn = C_AddOns.EnableAddOn;
+local DisableAddOn = C_AddOns.DisableAddOn;
 
 --##############################################################################
 
@@ -85,7 +86,7 @@ local function getAddonEnabledInfo ()
   local info = {};
 
   for x = 1, GetNumAddOns(), 1 do
-    info[GetAddOnInfo(x)] = (GetAddOnEnableState(playerName, x) == 2);
+    info[GetAddOnInfo(x)] = (GetAddOnEnableState(x, playerName) == 2);
   end
 
   return info;
@@ -111,9 +112,9 @@ local function restoreProfile (profile, characterOrAll)
     local addonName = GetAddOnInfo(x);
 
     if (profile[addonName] == true) then
-      EnableAddOn(addonName, characterOrAll);
+      EnableAddOn(x, characterOrAll);
     else
-      DisableAddOn(addonName, characterOrAll);
+      DisableAddOn(x, characterOrAll);
     end
   end
 end
@@ -162,3 +163,5 @@ function slashCommands.default ()
     print(profileName);
   end
 end
+
+slashCommands.list = slashCommands.default
