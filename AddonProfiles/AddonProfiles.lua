@@ -13,6 +13,8 @@ local GetAddOnEnableState = C_AddOns.GetAddOnEnableState;
 local EnableAddOn = C_AddOns.EnableAddOn;
 local DisableAddOn = C_AddOns.DisableAddOn;
 
+local Reload = C_UI.Reload;
+
 --##############################################################################
 
 local profiles;
@@ -114,6 +116,8 @@ local function restoreProfile (profile, characterOrAll)
       DisableAddOn(x, characterOrAll);
     end
   end
+
+  Reload();
 end
 
 --[[ This has to return either a character name or nil, as it will be passed
