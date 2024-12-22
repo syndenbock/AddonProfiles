@@ -2,6 +2,7 @@ local ADDON_NAME, _ = ...;
 
 local strsplit = strsplit;
 local strjoin = strjoin;
+local strlower = strlower;
 
 local UnitName = UnitName;
 
@@ -21,10 +22,12 @@ local eventFrame = CreateFrame('frame');
 function events.ADDON_LOADED (addonName)
   if (addonName ~= ADDON_NAME) then return end
 
+  profiles = {};
+
   if (type(_G.AddonProfiles_Saved) == 'table') then
-    profiles = _G.AddonProfiles_Saved;
-  else
-    profiles = {};
+    for profileName, profile in pairs(_G.AddonProfiles_Saved) do
+      profiles[strlower(profileName)] = profile;
+    end
   end
 
   events.ADDON_LOADED = nil;
@@ -93,18 +96,12 @@ local function getAddonEnabledInfo ()
 end
 
 function slashCommands.save (profileName)
-  profiles[profileName] = getAddonEnabledInfo();
+  profiles[strlower(profileName)] = getAddonEnabledInfo();
   print('saved addon profile:', profileName);
 end
 
 local function getAddonProfile (profileName)
-  local profile = profiles[profileName];
-
-  if (profile == nil) then
-    print('addon profile not found:', profileName);
-  end
-
-  return profile;
+  return profiles[profileName];
 end
 
 local function restoreProfile (profile, characterOrAll)
@@ -126,7 +123,7 @@ local function parseAllCharactersFlag (allCharacters)
     return getPlayerName();
   end
 
-  allCharacters = allCharacters:lower();
+  allCharacters = strlower(allCharacters);
 
   if (allCharacters == 'all' or allCharacters == 'true') then
     return nil;
@@ -136,24 +133,31 @@ local function parseAllCharactersFlag (allCharacters)
 end
 
 function slashCommands.load (profileName, allCharacters)
-  local profile = getAddonProfile(profileName);
+  local profile = getAddonProfile(strlower(profileName));
 
-  if (profile ~= nil) then
-    restoreProfile(profile, parseAllCharactersFlag(allCharacters));
-    print('restored saved addon profile:', profileName);
+  if (profile == nil) then
+    print('addon profile not found:', profileName);
+    return;
   end
+
+  restoreProfile(profile, parseAllCharactersFlag(allCharacters));
+  print('restored saved addon profile:', profileName);
 end
 
 function slashCommands.delete (...)
   local profileName = strjoin(' ', ...);
+  local lowercaseProfileName = strlower(profileName);
 
-  if (getAddonProfile(profileName) ~= nil) then
-    profiles[profileName] = nil;
-    print('deleted profile:', profileName);
+  if (getAddonProfile(lowercaseProfileName) == nil) then
+    print('addon profile not found:', profileName);
+    return;
   end
+
+  profiles[lowercaseProfileName] = nil;
+  print('deleted profile:', profileName);
 end
 
-function slashCommands.default ()
+function slashCommands.list ()
   if (next(profiles) == nil) then
     return print('no addon profiles saved');
   end
@@ -164,4 +168,4 @@ function slashCommands.default ()
   end
 end
 
-slashCommands.list = slashCommands.default
+slashCommands.default = slashCommands.list;
