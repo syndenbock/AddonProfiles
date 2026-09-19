@@ -12,6 +12,6 @@
 ## Author: syndenbock
 ## SavedVariables: AddonProfiles_Saved
 ## X-Curse-Project-ID: 504844
-## Version: 1.4.23
+## Version: 1.4.24
 
 AddonProfiles.lua
